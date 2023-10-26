@@ -1,0 +1,51 @@
+yum安装mysql参考：https://blog.csdn.net/Escorts/article/details/118941623
+密码修改参考：https://blog.csdn.net/weixin_44425934/article/details/109047655
+下载:https://dev.mysql.com/get/mysql80-community-release-el7-11.noarch.rpm
+
+localhost密码
+XLfrp_FPF9#9
+先用初始密码登录mysql -u root -p
+
+#查看mysql密码规则
+show variables like 'validate_password%';
+
+按照强度规则修改后：至少包含1位大小写特殊字符数字
+ALTER user 'root'@'localhost' IDENTIFIED BY 'Root_2023';
+
+修改密码设定强度
+set global validate_password.policy=0; #弱等级
+set global validate_password.length=1; #4位
+
+set global validate_password.mixed_case_count=0; #混合大小写 0个
+
+set global validate_password.special_char_count=0; #特殊字符0个
+
+exit
+重新登陆
+ALTER user 'root'@'localhost' IDENTIFIED BY '123456';
+
+
+开放远程连接：
+#切换到mysql库
+use mysql
+update user set host='%' where user='root';
+flush privileges;
+exit
+
+
+======================================
+创建表语句
+mysql> CREATE TABLE IF NOT EXISTS linkedin_alive(
+    -> account_id INT UNSIGNED AUTO_INCREMENT,
+    -> email VARCHAR(100) NOT NULL,
+    -> password VARCHAR(100) NOT NULL,
+    -> is_alive boolean NOT NULL,
+    -> submission_date DATE,
+    -> PRIMARY KEY (account_id)
+    -> )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+查看表结构
+describe linkedin_alive;
+
+插入一条数据
+insert 
