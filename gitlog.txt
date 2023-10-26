@@ -1,0 +1,12 @@
+ssh: connect to host github.com port 22: Connection refused
+
+https://zhuanlan.zhihu.com/p/521340971
+
+ssh -T -p 443 git@ssh.github.com后不再提示connection refused
+则在vim ~/.ssh/config
+添加
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+保存后重新push
+git push -u origin main
